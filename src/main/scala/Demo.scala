@@ -2,7 +2,6 @@ import java.io.{ByteArrayOutputStream, ObjectOutputStream}
 
 import org.mockito.Mockito
 
-import scala.util.Try
 object Demo extends App {
 
   def checkSerializable(obj: AnyRef, name: String) = {
