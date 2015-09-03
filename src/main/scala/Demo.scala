@@ -1,6 +1,8 @@
 import java.io.{ByteArrayOutputStream, ObjectOutputStream}
 
 import org.mockito.Mockito
+
+import scala.util.Try
 object Demo extends App {
 
   def checkSerializable(obj: AnyRef, name: String) = {
@@ -14,16 +16,31 @@ object Demo extends App {
     checkSerializable(task, "no-mockito")
   }
 
-  def failed(): Unit = {
+  def failed1(): Unit = {
     val fileReader = Mockito.mock(classOf[FileReader])
     val config = Mockito.mock(classOf[Config])
     Mockito.when(fileReader.read(config)).thenReturn("mocked")
     val task = new Task(fileReader)
-    checkSerializable(task, "with-mockito")
+    checkSerializable(task, "with-mockito1")
+  }
+
+  def failed2(): Unit = {
+    val fileReader = Mockito.mock(classOf[FileReader])
+    val config = Mockito.mock(classOf[Config], Mockito.withSettings().serializable())
+    Mockito.when(fileReader.read(config)).thenReturn("mocked")
+    val task = new Task(fileReader)
+    checkSerializable(task, "with-mockito2")
   }
 
   ok()
-  failed()
+
+  try failed1() catch {
+    case e: Throwable => e.printStackTrace()
+  }
+
+  try failed2() catch {
+    case e: Throwable => e.printStackTrace()
+  }
 
 }
 
