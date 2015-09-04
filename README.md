@@ -1,6 +1,6 @@
 Demo some `Serializable` problems with Mockito.
 
-If you run the `Demo.scala` code, it will report some `NotSerializableException` exception:
+If you run the `demo.MockitoDemo.scala` code, it will report some `NotSerializableException` exception:
 
 ```
 ### checking no-mockito: class Task
